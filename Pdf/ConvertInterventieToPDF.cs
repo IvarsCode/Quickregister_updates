@@ -37,7 +37,16 @@ namespace QuickRegister.Pdf.ConvertInterventieToPDF
 
         public string GeneratePdf(int interventieId, string medewerkerNaam)
         {
-            string outputFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string outputFolder;
+
+#if DEBUG
+            outputFolder = System.IO.Path.Combine(Environment.CurrentDirectory, "Concept");
+#else
+            outputFolder = System.IO.Path.Combine(AppContext.BaseDirectory, "Concept");
+#endif
+
+            System.IO.Directory.CreateDirectory(outputFolder);
+
             string filePath = System.IO.Path.Combine(
                 outputFolder,
                 $"Werkbon_{DateTime.Now:yyyyMMdd_HHmm}.pdf"
@@ -233,10 +242,10 @@ namespace QuickRegister.Pdf.ConvertInterventieToPDF
 
                         Table contactTable = new Table(new float[] { COL1, COL2 });
 
-                        if (call.ContactpersoonTelefoonNummer != null)
+                        if (call.ContactpersoonTelefoonNummer != "")
                             AddRow(contactTable, "Telefoonnummer:", call.ContactpersoonTelefoonNummer, boldFont, normalFont);
 
-                        if (call.ContactpersoonEmail != null)
+                        if (call.ContactpersoonEmail != "")
                             AddRow(contactTable, "Email:", call.ContactpersoonEmail, boldFont, normalFont);
 
                         doc.Add(contactTable);

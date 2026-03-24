@@ -116,6 +116,7 @@ namespace QuickRegister.ViewModels
             set { _showNewCallConfirmation = value; OnPropertyChanged(); }
         }
 
+        private string? _generatedPdfPath;
         private bool _showPdfArchiveConfirmation;
         public bool ShowPdfArchiveConfirmation
         {
@@ -1130,6 +1131,7 @@ namespace QuickRegister.ViewModels
 
                 var pdfGenerator = new ServiceBonPdf(_db);
                 string pdfPath = await Task.Run(() => pdfGenerator.GeneratePdf(interventieId, Username));
+                _generatedPdfPath = pdfPath;
 
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
@@ -1156,6 +1158,20 @@ namespace QuickRegister.ViewModels
             {
                 _existingInterventie.Afgerond = 1;
                 _db.SaveChanges();
+            }
+
+            // Move PDF from Concept to Archief
+            if (!string.IsNullOrEmpty(_generatedPdfPath) && System.IO.File.Exists(_generatedPdfPath))
+            {
+                string archiefFolder = System.IO.Path.Combine(
+                    System.IO.Path.GetDirectoryName(_generatedPdfPath)!, // parent of Concept
+                    "..", "Archief"
+                );
+                archiefFolder = System.IO.Path.GetFullPath(archiefFolder);
+                System.IO.Directory.CreateDirectory(archiefFolder);
+
+                string destination = System.IO.Path.Combine(archiefFolder, System.IO.Path.GetFileName(_generatedPdfPath));
+                System.IO.File.Move(_generatedPdfPath, destination, overwrite: true);
             }
 
             ShowPdfArchiveConfirmation = false;
