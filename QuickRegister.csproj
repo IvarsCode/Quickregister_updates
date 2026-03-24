@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <ApplicationIcon>Assets\elumatec.ico</ApplicationIcon>
+    <AssemblyName>QuickRegister</AssemblyName>
+    <RootNamespace>QuickRegister</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Data\*.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>Data\%(Filename)%(Extension)</Link>
+    </Content>
+    <ExcludeFromSingleFile Include="Microsoft.EntityFrameworkCore.*.dll" />
+    <ExcludeFromSingleFile Include="SQLitePCLRaw.*.dll" />
+    <ExcludeFromSingleFile Include="e_sqlite3.dll" />
+    <AvaloniaResource Include="Assets\elumatec.ico" />
+    <PackageReference Include="Avalonia" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.11" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.*">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.*" />
+    <PackageReference Include="itext7" Version="9.5.0" />
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.5.0" />
+  </ItemGroup>
+</Project>
