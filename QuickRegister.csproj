@@ -14,6 +14,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>Data\%(Filename)%(Extension)</Link>
     </Content>
+    <Content Include="Data\voilap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>Data\voilap.png</Link>
+    </Content>
     <ExcludeFromSingleFile Include="Microsoft.EntityFrameworkCore.*.dll" />
     <ExcludeFromSingleFile Include="SQLitePCLRaw.*.dll" />
     <ExcludeFromSingleFile Include="e_sqlite3.dll" />

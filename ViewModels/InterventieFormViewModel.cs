@@ -758,9 +758,14 @@ namespace QuickRegister.ViewModels
 
             if (_importantWarningActive)
             {
-                _timer.Stop();
-                CloseRequested?.Invoke();
-                return;
+                if (!allMustFillComplete)
+                {
+                    _timer.Stop();
+                    CloseRequested?.Invoke();
+                    return;
+                }
+                // Fields are now complete, clear the warning and fall through to save
+                _importantWarningActive = false;
             }
 
             if (allMustFillComplete && !optionalFieldsComplete && !_nonImportantWarningActive)
