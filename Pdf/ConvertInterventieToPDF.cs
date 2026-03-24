@@ -42,7 +42,7 @@ namespace QuickRegister.Pdf.ConvertInterventieToPDF
                 outputFolder,
                 $"Werkbon_{DateTime.Now:yyyyMMdd_HHmm}.pdf"
             );
-            var imageData = ImageDataFactory.Create("Pdf/voilap.png");
+            var imageData = ImageDataFactory.Create("Data/voilap.png");
             var image = new Image(imageData);
 
             try
