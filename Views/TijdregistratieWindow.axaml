@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:QuickRegister.ViewModels;assembly=QuickRegister"
+        xmlns:views="clr-namespace:QuickRegister.Views;assembly=QuickRegister"
+        x:Class="QuickRegister.Views.TijdregistratieWindow"
+        Width="970"
+        Height="700"
+        Title="Elumatec"
+        Icon="/Assets/elumatec.ico">
+
+    <Window.DataTemplates>
+        <!-- Map UserSelectionViewModel to UserSelectionView -->
+        <DataTemplate DataType="vm:UserSelectionViewModel">
+            <views:UserSelectionView />
+        </DataTemplate>
+
+        <!-- Map InterventieOverviewViewModel to InterventieOverview -->
+        <DataTemplate DataType="vm:InterventieOverviewViewModel">
+            <views:InterventieOverview />
+        </DataTemplate>
+
+        <!-- Map InterventieFormViewModel to InterventieFormView -->
+        <DataTemplate DataType="vm:InterventieFormViewModel">
+            <views:InterventieForm />
+        </DataTemplate>
+    </Window.DataTemplates>
+
+    <!-- ContentControl hosts the CurrentView -->
+    <ContentControl Content="{Binding CurrentView}" />
+
+</Window>

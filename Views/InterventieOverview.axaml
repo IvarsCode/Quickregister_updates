@@ -1,0 +1,153 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="QuickRegister.Views.InterventieOverview">
+
+    <Grid RowDefinitions="Auto,*" Margin="10">
+
+        <Grid ColumnDefinitions="Auto,Auto,300,Auto,*,Auto"
+              Grid.Row="0"
+              VerticalAlignment="Top"
+              ColumnSpacing="10">
+
+            <!-- New interventie button — hidden when viewing archief -->
+            <Button Content="Nieuwe interventie"
+                    FontSize="18"
+                    Padding="20,12"
+                    IsVisible="{Binding ShowNieuweInterventieButton}"
+                    Command="{Binding NieuweInterventieCommand}">
+                <Button.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="Background" Value="#ff0092"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="BorderBrush" Value="#ff0092"/>
+                        <Setter Property="BorderThickness" Value="3"/>
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                    <Style Selector="Button:pointerover /template/ ContentPresenter">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="#ff0092"/>
+                        <Setter Property="BorderThickness" Value="3"/>
+                    </Style>
+                    <Style Selector="Button:pointerover">
+                        <Setter Property="Foreground" Value="#ff0092"/>
+                    </Style>
+                </Button.Styles>
+            </Button>
+
+            <!-- Filter label + dropdown -->
+            <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="2" VerticalAlignment="Bottom">
+                <TextBlock Text="Filter" FontSize="12" Opacity="0.7"/>
+                <ComboBox Width="160"
+                          ItemsSource="{Binding FilterTypes}"
+                          SelectedItem="{Binding SelectedFilter}"/>
+            </StackPanel>
+
+            <!-- Text search -->
+            <TextBox Grid.Column="2"
+                     Watermark="Zoeken..."
+                     Text="{Binding SearchText, Mode=TwoWay}"
+                     IsVisible="{Binding IsTextSearch}"
+                     VerticalAlignment="Bottom"/>
+
+            <!-- Date search -->
+            <StackPanel Grid.Column="2"
+                        Orientation="Vertical"
+                        Spacing="4"
+                        IsVisible="{Binding IsDateSearch}"
+                        VerticalAlignment="Bottom"
+                        ClipToBounds="False">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <TextBlock VerticalAlignment="Center" Text="Van:" Width="28"/>
+                    <DatePicker SelectedDate="{Binding FromDate}" Width="250"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <TextBlock VerticalAlignment="Center" Text="Tot:" Width="28"/>
+                    <DatePicker SelectedDate="{Binding ToDate}" Width="250"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Archive toggle button — hidden until feature is ready -->
+            <Button Grid.Column="3"
+                    Command="{Binding ToggleArchiefCommand}"
+                    VerticalAlignment="Bottom"
+                    Background="#F0F0F0"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="6"
+                    IsVisible="False"><!-- Toggle archief button -->
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <PathIcon Data="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                              Width="16"
+                              Height="16"/>
+                    <TextBlock Text="{Binding ArchiefButtonLabel}"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               FontSize="14"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Spacer -->
+            <Grid Grid.Column="4"/>
+
+            <!-- User button -->
+            <StackPanel Grid.Column="5" Orientation="Vertical" Spacing="6">
+                <Button Command="{Binding TerugCommand}"
+                        Background="#F0F0F0"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="6"
+                        Width="160"
+                        HorizontalAlignment="Center">
+                    <TextBlock FontWeight="SemiBold"
+                               Text="{Binding GebruikerNaam, StringFormat=Gebruiker: {0}}"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1"
+                      Margin="0,20,0,0"
+                      VerticalScrollBarVisibility="Auto">
+
+            <ItemsControl ItemsSource="{Binding Interventies}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,0,0,12"
+                                Padding="14"
+                                CornerRadius="6"
+                                BorderThickness="1"
+                                BorderBrush="Gray"
+                                MinWidth="900">
+                            <Button Background="Transparent"
+                                    BorderThickness="0"
+                                    HorizontalContentAlignment="Stretch"
+                                    MinWidth="900"
+                                    Height="120"
+                                    Command="{Binding DataContext.OpenInterventieCommand,
+                                                      RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                <Grid ColumnDefinitions="2*,3*" ColumnSpacing="20">
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Bedrijfsnaam}" FontSize="20" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Machine}" Opacity="0.7" Margin="0,2,0,6"/>
+                                        <TextBlock Text="{Binding DatumRecentsteCall, StringFormat='Laatste call: {0:dd-MM-yyyy HH:mm}'}" FontSize="12" Opacity="0.6"/>
+                                        <TextBlock Text="{Binding AantalCalls, StringFormat='Aantal calls: {0}'}" FontSize="12" Opacity="0.6"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Spacing="8" MinWidth="400" VerticalAlignment="Top">
+                                        <TextBlock Text="Interne notities" FontWeight="SemiBold" FontSize="13"/>
+                                        <TextBlock Text="{Binding InterneNotitiesKort}" TextWrapping="Wrap" Opacity="0.8"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

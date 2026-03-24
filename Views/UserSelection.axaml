@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="QuickRegister.Views.UserSelectionView">
+
+    <StackPanel Spacing="12"
+                Width="400"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,100,0,0">
+
+        <TextBlock Text="Naam werknemer:"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"/>
+
+        <TextBox Watermark="Zoek werknemer..."
+                 Text="{Binding SearchText, Mode=TwoWay}"/>
+
+        <ItemsControl ItemsSource="{Binding FilteredUsers}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Naam}"
+                            HorizontalContentAlignment="Left"
+                            Command="{Binding DataContext.SelectUserCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
+        <TextBlock Text="Meest recente gebruiker"
+                   Margin="0,10,0,0"
+                   FontWeight="SemiBold"
+                   IsVisible="{Binding HasRecentUser}"/>
+
+        <Button Content="{Binding RecentUser.Naam}"
+                IsVisible="{Binding HasRecentUser}"
+                Command="{Binding SelectUserCommand}"
+                CommandParameter="{Binding RecentUser}"
+                HorizontalContentAlignment="Left"/>
+
+    </StackPanel>
+</UserControl>
