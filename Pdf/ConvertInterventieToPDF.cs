@@ -8,6 +8,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Borders;
 using iText.IO.Font.Constants;
+using iText.IO.Image;
 using QuickRegister.Data;
 using QuickRegister.Models;
 using iText.Kernel.Pdf.Canvas.Draw;
@@ -41,6 +42,8 @@ namespace QuickRegister.Pdf.ConvertInterventieToPDF
                 outputFolder,
                 $"Werkbon_{DateTime.Now:yyyyMMdd_HHmm}.pdf"
             );
+            var imageData = ImageDataFactory.Create("Data/voilap.png");
+            var image = new Image(imageData);
 
             try
             {
@@ -89,6 +92,7 @@ namespace QuickRegister.Pdf.ConvertInterventieToPDF
                 header.AddCell(contactCell);
 
                 doc.Add(header);
+                doc.Add(image.SetWidth(100).SetHorizontalAlignment(HorizontalAlignment.LEFT));
                 doc.Add(CreateSeparator());
 
                 // ===== ONLINE SUPPORT =====
