@@ -36,9 +36,6 @@ namespace QuickRegister
 #else
                     db.Database.EnsureCreated();
 #endif
-                    BedrijvenLaden.LoadBedrijvenCsvToDb(db);
-                    MachineLaden.LoadMachineCsvToDb(db);
-                    MedewerkersLaden.LoadMedewerkerCsvToDb(db);
                 }
             }
             catch (Exception ex)
