@@ -25,8 +25,19 @@ namespace QuickRegister.ViewModels
         public MainViewModel(AppDbContext db)
         {
             Db = db;
-            if (CurrentUser == null)
+
+            var diff = CsvDiffChecker.CheckDiff(db);
+            if (diff.HasChanges)
+            {
+                var updateVM = new DatabaseUpdateViewModel(db, diff);
+                updateVM.OnUpdateCompleted = ShowUserSelection;
+                updateVM.OnSkipRequested = ShowUserSelection;
+                CurrentView = updateVM;
+            }
+            else
+            {
                 ShowUserSelection();
+            }
         }
 
         public void SwitchUser()

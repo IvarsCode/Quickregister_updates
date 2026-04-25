@@ -11,7 +11,7 @@ class MachineLaden
     {
         try
         {
-            var csvPath = Path.Combine(AppContext.BaseDirectory, "Data", "machineLijst.csv");
+            var csvPath = Path.Combine(AppContext.BaseDirectory, "Data", "MachineLijst.csv");
 
             if (!File.Exists(csvPath))
             {

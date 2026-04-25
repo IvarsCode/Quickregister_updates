@@ -11,7 +11,7 @@ class MedewerkersLaden
     {
         try
         {
-            var csvPath = Path.Combine(AppContext.BaseDirectory, "Data", "medewerkerLijst.csv");
+            var csvPath = Path.Combine(AppContext.BaseDirectory, "Data", "MedewerkerLijst.csv");
 
             if (!File.Exists(csvPath))
             {

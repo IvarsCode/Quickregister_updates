@@ -9,17 +9,18 @@
         Icon="/Assets/elumatec.ico">
 
     <Window.DataTemplates>
-        <!-- Map UserSelectionViewModel to UserSelectionView -->
+        <DataTemplate DataType="vm:DatabaseUpdateViewModel">
+            <views:DatabaseUpdateView />
+        </DataTemplate>
+
         <DataTemplate DataType="vm:UserSelectionViewModel">
             <views:UserSelectionView />
         </DataTemplate>
 
-        <!-- Map InterventieOverviewViewModel to InterventieOverview -->
         <DataTemplate DataType="vm:InterventieOverviewViewModel">
             <views:InterventieOverview />
         </DataTemplate>
 
-        <!-- Map InterventieFormViewModel to InterventieFormView -->
         <DataTemplate DataType="vm:InterventieFormViewModel">
             <views:InterventieForm />
         </DataTemplate>
